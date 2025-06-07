@@ -1,45 +1,48 @@
-import React from 'react'
+import { Controller, Control, FieldValues, Path } from "react-hook-form";
+
 import {
-  Form,FormControl,FormDescription,FormItem,FormLabel,FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import Image from 'next/image'
-import { Control, Controller, Field, FieldValues, Path } from 'react-hook-form'
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-
-interface FormFieldProps<T extends FieldValues>{
-    name : Path<T>,
-    control : Control<T>,
-    label : string,
-    placeholder ?: string,
-    type ?: 'text' | 'email' | 'password' | 'file'
+interface FormFieldProps<T extends FieldValues> {
+  control: Control<T>;
+  name: Path<T>;
+  label: string;
+  placeholder?: string;
+  type?: "text" | "email" | "password";
 }
 
 const FormField = <T extends FieldValues>({
-    name,
-    control,
-    label,
-    placeholder,
-    type = "text",
-} : FormFieldProps<T>) => {
+  control,
+  name,
+  label,
+  placeholder,
+  type = "text",
+}: FormFieldProps<T>) => {
   return (
     <Controller
-        control={control}
-        name={name}
-        render={({ field }) => (
-            <FormItem>
-            <FormLabel>Username</FormLabel>
-            <FormControl>
-                <Input placeholder="shadcn" {...field} />
-            </FormControl>
-            <FormDescription>
-                This is your public display name.
-            </FormDescription>
-            <FormMessage />
-            </FormItem>
-        )}
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="label">{label}</FormLabel>
+          <FormControl>
+            <Input
+              className="input"
+              type={type}
+              placeholder={placeholder}
+              {...field}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
     />
-  )
-}
+  );
+};
 
-export default FormField
+export default FormField;

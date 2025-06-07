@@ -9,6 +9,8 @@ import { Form } from "@/components/ui/form"
 import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import FormField from './FormField'
+import { useRouter } from 'next/navigation'
 
 
 const authFormSchema = (type : FormType) => {
@@ -21,7 +23,8 @@ const authFormSchema = (type : FormType) => {
 
 const AuthForm = ({type} : {type : FormType}) => {
     // 1. Define your form.
-
+    
+    const router = useRouter();
     const formSchema = authFormSchema(type); 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,12 +42,13 @@ const AuthForm = ({type} : {type : FormType}) => {
     
     try{
         if(type === 'sign-up'){
-            console.log("Signed up");
-            console.log(values);
+            toast.success("Account created Successfully. Please Sign In");
+            router.push('/sign-in');
         }
         else{
-            console.log("Signed in");
-            console.log(values);
+            const router = useRouter();
+            toast.success("Signed In Successfully");
+            router.push('/');
         }
 
     }
@@ -74,9 +78,27 @@ const AuthForm = ({type} : {type : FormType}) => {
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
                 className="space-y-6 mt-4 w-full form">
-                {isSignup && <p>Name</p>}
-                <p>Email</p>
-                <p>Password</p>
+                {isSignup && <FormField 
+                    name='name' 
+                    label='Name' 
+                    placeholder='Your name' 
+                    control={form.control}
+                    />}
+
+                <FormField 
+                    name='email' 
+                    label='Email' 
+                    placeholder='Your email address' 
+                    control={form.control}
+                    type='email'
+                />
+                <FormField 
+                    name='password' 
+                    label='Password' 
+                    placeholder='Enter Password' 
+                    control={form.control}
+                    type='password'
+                />
                 <Button type="submit" className='btn'>{isSignup ? "Create an Account" : "Sign In"}</Button>
 
                 <p className='text-center'>
