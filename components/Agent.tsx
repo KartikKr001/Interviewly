@@ -86,14 +86,15 @@ const Agent = ({userName,type,userId}:AgentProps) => {
 
     const handleConnect = async () =>{
         setCallStatus(CallStaus.CONNECTING);
-        const hello = await vapi.start(process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID,
-        {
-            variableValues : {
-                username : userName,  
-                userid : userId,
-            }
-        }
-        ,"",process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID);
+        const hello = await vapi.start(process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID);
+        // ,
+        // {
+        //     variableValues : {
+        //         username : userName,  
+        //         userid : userId,
+        //     }
+        // }
+        // ,"",process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID);
         console.log("handle click initiated: ",hello);
     }
     const handleDisconnect = async () =>{
