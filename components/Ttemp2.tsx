@@ -13,10 +13,13 @@ export default function VoiceAssistantWidget() {
       }>
         {active ? 'End Call' : 'Start Call'}
       </button>
+      <hr />
       <button onClick={stop} disabled={!active}>
         Stop
       </button>
+      <hr />
       <pre>{transcript}</pre>
+      <hr />
     </div>
   );
 }
